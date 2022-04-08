@@ -1,0 +1,480 @@
+python3 map_embeddings.py --unsupervised /home/iftakhar/vecmap/data/embeddings/en.emb.txt /home/iftakhar/vecmap/data/embeddings/de.emb.txt /home/iftakhar/vecmap/mapped/src_en /home/iftakhar/vecmap/mapped/trg_de --cuda
+
+python3 map_embeddings.py --unsupervised /home/iftakhar/vecmap/data/embeddings/es.emb.txt /home/iftakhar/vecmap/data/embeddings/it.emb.txt /home/iftakhar/vecmap/mapped/src_es /home/iftakhar/vecmap/mapped/trg_it --cuda
+
+python3 map_embeddings.py --unsupervised /home/iftakhar/vecmap/our_data/vectors_x86.txt /home/iftakhar/vecmap/our_data/vectors_ARM.txt /home/iftakhar/vecmap/mapped/src_x86 /home/iftakhar/vecmap/mapped/trg_ARM --cuda
+
+at server
+ssh iftakhar@129.252.131.33
+
+/home/iftakhar/ifty/vecmap/data/embeddings
+/home/iftakhar/ifty/vecmap/mapped
+
+python3 map_embeddings.py --unsupervised /home/iftakhar/ifty/vecmap/data/embeddings/en.emb.txt /home/iftakhar/ifty/vecmap/data/embeddings/de.emb.txt /home/iftakhar/ifty/vecmap/mapped/src_en /home/iftakhar/ifty/vecmap/mapped/trg_de --cuda
+
+scp /home/iftakhar/vecmap/data/embeddings/en.emb.txt iftakhar@129.252.131.33:/home/iftakhar/ifty/undreamt/undreamt
+
+scp en.emb.txt iftakhar@129.252.131.33:/home/iftakhar/ifty/undreamt/undreamt
+
+test upload
+scp -r /home/iftakhar/vecmap/run_vecmap.sh iftakhar@129.252.131.33:/home/iftakhar/ifty/undreamt/undreamt/our_data
+
+scp -r /home/iftakhar/vecmap/run_undreamt.sh iftakhar@129.252.131.33:/home/iftakhar/ifty/undreamt/undreamt
+./run_undreamt.sh
+scp -r /home/iftakhar/vecmap/run_undreamt_test.sh iftakhar@129.252.131.33:/home/iftakhar/ifty/undreamt/undreamt
+
+scp -r /home/iftakhar/vecmap/mapped/src_x86_EMB.TXT iftakhar@129.252.131.33:/home/iftakhar/ifty/undreamt/undreamt/our_data
+scp -r /home/iftakhar/vecmap/mapped/trg_ARM_EMB.TXT iftakhar@129.252.131.33:/home/iftakhar/ifty/undreamt/undreamt/our_data
+
+scp -r /home/iftakhar/DeepBinDiff/src/final_code_sequences_for_BBs/random_walk_code_sequences_x86.txt iftakhar@129.252.131.33:/home/iftakhar/ifty/undreamt/undreamt/our_data
+scp -r /home/iftakhar/DeepBinDiff/src/final_code_sequences_for_BBs/random_walk_code_sequences_ARM.txt iftakhar@129.252.131.33:/home/iftakhar/ifty/undreamt/undreamt/our_data
+scp -r /home/iftakhar/DeepBinDiff/src/final_code_sequences_for_BBs/random_walk_code_sequences_ARM_test.txt iftakhar@129.252.131.33:/home/iftakhar/ifty/undreamt/undreamt/our_data
+
+
+scp -r /home/iftakhar/undreamt/undreamt/train.py iftakhar@129.252.131.33:/home/iftakhar/ifty/undreamt/undreamt/undreamt
+
+/home/iftakhar/ifty/vecmap/data/embeddings/en.emb.txt src
+/home/iftakhar/ifty/vecmap/data/embeddings/de.emb.txt trg
+
+/home/iftakhar/ifty/vecmap/mapped/src_en src mapped
+/home/iftakhar/ifty/vecmap/mapped/trg_de trg mapped
+
+python3 train.py --src /home/iftakhar/ifty/vecmap/data/embeddings/en.emb.txt --trg /home/iftakhar/ifty/vecmap/data/embeddings/de.emb.txt --src_embeddings /home/iftakhar/ifty/vecmap/mapped/src_en --trg_embeddings /home/iftakhar/ifty/vecmap/mapped/trg_de --save undreamt_saved_model_5 --cuda
+
+2271.pts-0.seclab-Alienware-Area-51-R5	(08/27/2021 04:41:38 AM)
+
+//For desktop
+python3 train.py --src /home/iftakhar/DeepBinDiff/src/final_code_sequences_for_BBs/random_walk_code_sequences_x86.txt --trg /home/iftakhar/DeepBinDiff/src/final_code_sequences_for_BBs/random_walk_code_sequences_ARM.txt --src_embeddings /home/iftakhar/vecmap/mapped/src_x86_EMB.TXT --trg_embeddings /home/iftakhar/vecmap/mapped/trg_ARM_EMB.TXT --save undreamt_saved_model_5_desktop --cuda
+
+CUDA_LAUNCH_BLOCKING=1 python3 train.py --src /home/iftakhar/DeepBinDiff/src/final_code_sequences_for_BBs/random_walk_code_sequences_x86.txt --trg /home/iftakhar/DeepBinDiff/src/final_code_sequences_for_BBs/random_walk_code_sequences_ARM.txt --src_embeddings /home/iftakhar/vecmap/mapped/src_x86_EMB.TXT --trg_embeddings /home/iftakhar/vecmap/mapped/trg_ARM_EMB.TXT --batch 20 --save undreamt_saved_model_5_desktop --cuda
+
+//For desktop with small test data to check sentence embeddings
+CUDA_LAUNCH_BLOCKING=1 python3 train.py --src /home/iftakhar/DeepBinDiff/src/final_code_sequences_for_BBs/random_walk_code_sequences_x86_small_test.txt --trg /home/iftakhar/DeepBinDiff/src/final_code_sequences_for_BBs/random_walk_code_sequences_ARM_small_test.txt --src_embeddings /home/iftakhar/vecmap/mapped/src_x86_EMB.TXT --trg_embeddings /home/iftakhar/vecmap/mapped/trg_ARM_EMB.TXT --batch 20 --save undreamt_saved_model__small_test_1_desktop --cuda
+
+python3 train.py --src /home/iftakhar/DeepBinDiff/src/final_code_sequences_for_BBs/random_walk_code_sequences_x86.txt --src_embeddings /home/iftakhar/vecmap/mapped/src_x86_EMB.TXT --save undreamt_saved_model_5_x86_only_desktop --cuda
+
+conda activate rapids-0.16
+
+sudo apt install gcc-arm-none-eabi
+gcc-arm-none-eabi-objdump -d -marm git-add
+
+python3 train.py --src /home/iftakhar/ifty/vecmap/data/embeddings/en.emb.txt --trg /home/iftakhar/ifty/vecmap/data/embeddings/de.emb.txt --src_embeddings /home/iftakhar/ifty/vecmap/mapped/src_en --trg_embeddings /home/iftakhar/ifty/vecmap/mapped/trg_de --save undreamt_saved_model_5 --cuda
+
+
+objdump -d -l git-add
+objdump -d -l git-add > git-add_disassembly.txt
+objdump -d -l git-annotate > git-annotate_disassembly_arm.txt
+gdb -q ./git-add.out
+
+arm-elf-objdump -D -b binary -marm git-add
+# This worked !!!!!!!!!!!!!!!
+arm-none-eabi-objdump -D -b binary -marm git-add > git-add_disassembly_ARM.txt
+
+objdump -d -D -m vax git-add > git-add_disassembly_arm.txt
+arm-linux-gnu-objdump -d -D -m vax /home/iftakhar/Data for undreamt evaluation/gitARM/git-add > git-add_disassembly_arm.txt
+arm-linux-gnueabi-objdump -d -D -m git-add > git-add_disassembly_arm.txt
+
+This format works may be
+arm-linux-gnueabi-objdump -d -D -l git-add > git-add_disassembly_arm.txt
+
+
+sudo apt install arm-none-eabi-objdump
+ gcc-arm-none-eabi
+
+gdb -r ./git-add
+gdb -r ./git-add
+disassemble
+
+objconv  -fyasm git-add /dev/stdout | less
+
+error
+RuntimeError: CUDA out of memory. Tried to allocate 88.00 MiB (GPU 0; 7.92 GiB total capacity; 754.35 MiB already allocated; 54.25 MiB free; 866.00 MiB reserved in total by PyTorch)
+
+python3 translate.py undreamt_saved_model_5_desktop.final.src2trg.pth < /home/iftakhar/DeepBinDiff/src/final_code_sequences_for_BBs/small_x86_for_translation.txt > output_small_x86_for_translation_src2trg.txt
+
+
+gcc alloc.c –o alloc
+objdump -d -l alloc.o > alloc_disassembly.txt
+
+objdump -d git-add > git-add_test_without_l_disassembly.txt
+arm-linux-gnueabi-objdump -d -D -l git-add > git-add_1_disassembly_arm.txt
+
+EKLAVYA
+Training embeddings
+python prep_embed_input.py -o /home/iftakhar/EKLAVYA/code/embedding/outputs/embedding_output.txt -e /home/iftakhar/EKLAVYA/code/embedding/outputs/error_info.txt -m /home/iftakhar/EKLAVYA/code/embedding/outputs/map_info.txt -i /home/iftakhar/data_for_EKLAVYA/clean_pickles/x86
+
+python prep_embed_input.py -o /home/iftakhar/EKLAVYA/code/embedding/outputs/embedding_output_test1.txt -e /home/iftakhar/EKLAVYA/code/embedding/outputs/error_info1.txt -m /home/iftakhar/EKLAVYA/code/embedding/outputs/map_info1.txt -i /home/iftakhar/data_for_EKLAVYA/clean_pickles/x86
+
+python train_embed.py -i /home/iftakhar/EKLAVYA/code/embedding/outputs/embedding_output.txt -o /home/iftakhar/EKLAVYA/code/embedding/outputs/embedding_output
+-->> having issues with tensorflow
+DID not work 2.3 2.2 2.2.0rc1
+
+
+@Server
+scp -r /home/iftakhar/EKLAVYA/code/embedding/outputs/embedding_output.txt iftakhar@129.252.131.33:/home/iftakhar/ifty/EKLAVYA/code/embedding/outputs
+
+python train_embed.py -i /home/iftakhar/ifty/EKLAVYA/code/embedding/outputs/embedding_output.txt -o /home/iftakhar/ifty/EKLAVYA/code/embedding/outputs/embedding_output
+
+
+sudo cp /home/iftakhar/tensorflow/tensorflow/core/platform/cuda.h /usr
+
+
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+torchvision 0.9.1 requires pillow>=4.1.1, which is not installed.
+thundergbm 0.3.16 requires scikit-learn, which is not installed.
+catboost 0.26 requires graphviz, which is not installed.
+catboost 0.26 requires matplotlib, which is not installed.
+catboost 0.26 requires plotly, which is not installed.
+
+
+
+
+pip install --upgrade https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-0.11.0rc0-cp27-none-linux_x86_64.whl
+
+sudo update-alternatives --install /usr/bin/python python /usr/bin/python3.5 1
+
+pip install --upgrade https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-0.12.0-cp35-cp35m-manylinux1_x86_64.whl
+
+virtual env for diff versions of python
+sudo apt install python3.5-venv
+python -m venv venv
+source venv/bin/activate
+
+
+conda search "^python$"
+conda create --name env_python_3_5 python=3.5
+conda activate env_python_3_5
+
+pyelftools
+python examples/examine_dwarf_info.py --test examples/sample_exe64.elf
+python examples/examine_dwarf_info.py --test examples/clang-32-O0-binutils-addr2line
+python examples/examine_dwarf_info.py --test examples/simple_gcc.elf.arm
+python examples/examine_dwarf_info.py --test examples/git-add
+
+python examples/dwarf_decode_address.py --test examples/git-add
+python examples/dwarf_decode_address.py --test examples/sample_exe64.elf
+
+.pkl -> inst list -> only need to analyze functions object's inst_strings obj
+
+Eklavya rnn train
+
+python train.py [options] -d data_folder -o output_dir -f split_func_path -e embed_path
+python train.py [options] -d /home/iftakhar/data_for_EKLAVYA/clean_pickles/x86 -o /home/iftakhar/EKLAVYA/code/RNN/RNN_TRAIN_OUTPT_DIR -f /home/iftakhar/EKLAVYA/code/RNN/RNN_TRAIN_OUTPT_DIR/split_func_path.txt -e /home/iftakhar/data_for_EKLAVYA/clean_pickles/preprocessed_files/preprocessed_files.txt
+
+2021-10-14 21:48:19.684339: W tensorflow/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libcudart.so.11.0'; dlerror: libcudart.so.11.0: cannot open shared object file: No such file or directory
+2021-10-14 21:48:19.684353: I tensorflow/stream_executor/cuda/cudart_stub.cc:29] Ignore above cudart dlerror if you do not have a GPU set up on your machine.
+
+tf_upgrade_v2 -h
+
+
+tf_upgrade_v2 \
+  --intree /home/iftakhar/EKLAVYA/code/RNN_v3/ \
+  --outtree /home/iftakhar/EKLAVYA/code/RNN_v4/ \
+  --reportfile /home/iftakhar/EKLAVYA/code/report_for_v4.txt
+
+
+//below did not work
+tf_upgrade_v2 \
+  --intree /home/iftakhar/EKLAVYA/code/embedding/ \
+  --outtree /home/iftakhar/EKLAVYA/code/embedding_v2/ \
+  --reportfile /home/iftakhar/EKLAVYA/code/report_for_embedding_v2.txt
+
+python prep_embed_input.py -o /home/iftakhar/EKLAVYA/code/embedding_v2/outputs/embedding_output.txt -e /home/iftakhar/EKLAVYA/code/embedding_v2/outputs/error_info.txt -m /home/iftakhar/EKLAVYA/code/embedding_v2/outputs/map_info.txt -i /home/iftakhar/data_for_EKLAVYA/clean_pickles/x86
+
+python train_embed.py -i /home/iftakhar/EKLAVYA/code/embedding_v2/outputs/embedding_output.txt -o /home/iftakhar/EKLAVYA/code/embedding_v2/outputs/embedding_output
+
+
+python train.py -d /home/iftakhar/data_for_EKLAVYA/clean_pickles/x86 -o /home/iftakhar/EKLAVYA/code/RNN_v4/RNN_TRAIN_OUTPT_DIR -f /home/iftakhar/EKLAVYA/code/RNN/RNN_TRAIN_OUTPT_DIR/split_func_path.pkl -e /home/iftakhar/data_for_EKLAVYA/clean_pickles/preprocessed_files/preprocessed_files.txt -ed 200 -pn 10 > train_3_pkg_logs.txt
+
+
+
+
+python eval.py -d /home/iftakhar/data_for_EKLAVYA/clean_pickles/x86 -f /home/iftakhar/EKLAVYA/code/RNN/RNN_TRAIN_OUTPT_DIR/split_func_path.pkl -e /home/iftakhar/data_for_EKLAVYA/clean_pickles/preprocessed_files/preprocessed_files.txt -m /home/iftakhar/EKLAVYA/code/RNN_v4/RNN_TRAIN_OUTPT_DIR/model -o /home/iftakhar/EKLAVYA/code/RNN_v4/RNN_TEST_3pkg_OUTPT_DIR -ed 200 -pn 10 > test_3pkg_logs.txt
+
+
+
+arm-linux-gnueabi-objdump -d -D -l dumpsexp > dumpsexp_disassembly.txt
+
+export PATH="${PATH:+${PATH}:}~/home/iftakhar/idapro-7.6"
+env TERM=xterm /home/iftakhar/idapro-7.6
+
+
+ls -l /home/iftakhar/idapro-7.6
+
+
+chmod -rwx /home/iftakhar/idapro-7.6
+
+
+chmod 777 /home/iftakhar/idapro-7.6 
+
+/home/iftakhar/idapro-7.6/ida64
+
+export PATH="${PATH:+${PATH}:}~/home/iftakhar/idapro-7.6/" // worked
+
+
+Run `env CFLAGS="-O0" CXXFLAGS="-O0" ./configure`
+Run `make CXXFLAGS=-g CFLAGS=-g`
+
+gcc diff.c -o diff
+gcc xargs.c -o xargs
+xargs.c
+
+////////////////////////
+Try lab server for gcc compilation
+
+
+scp -r /home/iftakhar/C_program_files_to_compile/findutils-4.8.0.tar.xz iftakhar@129.252.131.33:/home/iftakhar/ifty/gcc_compilation
+
+tar -xvf findutils-4.8.0.tar.xz
+frcode.c
+gcc frcode.c -o frcode
+
+Done with lab serve/ same issue
+
+cp /usr/src/linux-headers-$(uname -r)/.config /home/iftakhar/C_program_files_to_compile/findutils-4.8.0/.config
+
+
+
+////
+sudo make clean && sudo make install
+
+$ sudo apt-get install libusb-1.0-0-dev
+
+$ git clone https://github.com/IntelRealSense/librealsense.git
+$ cd librealsense/
+$ mkdir build && cd build
+//upto this ok
+
+//issue with below
+cmake ../ -DFORCE_RSUSB_BACKEND=true -DBUILD_PYTHON_BINDINGS=true -DCMAKE_BUILD_TYPE=release -DBUILD_EXAMPLES=true -DBUILD_GRAPHICAL_EXAMPLES=true
+
+below two sloves issue for above:
+sudo apt-get install libx11-dev
+sudo apt-get install xorg-dev libglu1-mesa-dev
+
+sudo make uninstall && make clean && make && sudo make install
+
+//still same issue
+sudo apt-get install git libssl-dev libusb-1.0-0-dev pkg-config libgtk-3-dev 
+
+probable reason::::
+https://stackoverflow.com/questions/9439744/gtk-cant-find-config-h
+
+****************Solution*********************
+Download program pkg
+Goto main folder with "configure" file
+Run below command:
+env CFLAGS="-O0" CXXFLAGS="-O0" ./configure
+Then run below command:
+sudo make CXXFLAGS=-g CFLAGS=-g
+
+Done hopefully
+
+
+For dwarf function signature generation:
+readelf -wi sg_readcap
+
+readelf -wi xargs > xargs_output.txt
+
+python examine_dwarf_info.py --test /home/iftakhar/Desktop/Data/binary/xargs > xargs_dwarf_info_out.txt
+
+
+
+files /home/iftakhar/Desktop/Data/binary/xargs
+--verbose TRUE
+python /home/iftakhar/pyelftools/test/run_readelf_tests.py /home/iftakhar/Desktop/Data/binary/xargs
+
+ARM:
+readelf -wi dumpsexp > dumpsexp_output.txt
+
+find . -exec file {} \; | grep -i elf
+
+//Working
+find /home/iftakhar/C_program_files_to_compile/sg_utils-1.02 -type f -exec sh -c "file {} | grep -Pi ': elf (32|64)-bit' > /dev/null" \; -print > exe_file_list.txt
+
+find /home/iftakhar/C_program_files_to_compile/sg3_try/new/sg_utils-1.02 -type f -exec sh -c "file {} | grep -Pi ': elf (32|64)-bit' > /dev/null" \; -print > exe_file_list.txt
+
+find /home/iftakhar/C_program_files_to_compile/ARM_Final_files_with_All_Opt_levels_binaries/O0/coreutils-9.0_ARM/coreutils-9.0 -type f -exec sh -c "file {} | grep -Pi ': elf (32|64)-bit' > /dev/null" \; -print > exe_file_list.txt
+
+gcc-32-O0-diffutils-diff3
+
+
+*****************// issue with .c files// may need to download fresh // Hope works with fresh downloads***************
+x86 bin Using script:
+// open terminal at /home/iftakhar/C_program_files_to_compile/C_8_packages_original_files/C_program_files
+unzip binutils-2.37.zip
+cd binutils-2.37
+env CFLAGS="-O3" CXXFLAGS="-O3" ./configure
+sudo make CXXFLAGS=-g CFLAGS=-g
+// will ask for password
+echo 1234 | sudo -S sudo make CXXFLAGS=-g CFLAGS=-g
+
+
+
+cat random_walk_code_sequences_x86.txt undreamt_6pkg_exclusive_random_walk_code_sequences_x86.txt > random_walk_code_sequences_x86_full.txt
+
+
+complete process 01.13.2022
+//in /home/iftakhar/Documents/UofSC Thesis and others/Thesis/word2vec/word2vec/trunk
+//open terminal
+make
+//*** Make sure input/output files are in a folder such that full path length is not too BIG
+./demo-word.sh
+
+//for vecmap
+//in /home/iftakhar/vecmap
+//open terminal 
+python3 map_embeddings.py --unsupervised /home/iftakhar/Final_data_for_EK_and_Undreamt/x86_w2v_output.txt /home/iftakhar/Final_data_for_EK_and_Undreamt/ARM_w2v_output.txt /home/iftakhar/Final_data_for_EK_and_Undreamt/vecmap_mapped_data/SRC_x86_MAPPED.EMB /home/iftakhar/Final_data_for_EK_and_Undreamt/vecmap_mapped_data/TRG_ARM_MAPPED.EMB --cuda
+ ?? Error cupy.cuda.memory.OutOfMemoryError: Out of memory allocating 6,474,024,960 bytes (allocated so far: 5,311,031,296 bytes) on desktop
+
+
+
+March 8, 2022
+Vecmap new pc, pc3 with GPU
+//new approach for undreamt
+python3 map_embeddings.py --unsupervised ARM_w2v_op_O0_new.txt x86_w2v_op_O0_new.txt SRC_ARM_MAPPED.EMB TRG_x86_MAPPED.EMB --cuda
+
+python3 map_embeddings.py --unsupervised x86_w2v_op_O1.txt ARM_w2v_op_O1.txt SRC_x86_MAPPED_O1.EMB TRG_ARM_MAPPED_O1.EMB --cuda
+
+
+
+
+
+So trying with lab server
+scp -r /home/iftakhar/vecmap.zip iftakhar@129.252.131.33:/home/iftakhar/ifty/vecmap_new_data
+
+//For lab server
+python3 map_embeddings.py --unsupervised /home/iftakhar/ifty/vecmap_new_data/x86_w2v_output.txt /home/iftakhar/ifty/vecmap_new_data/ARM_w2v_output.txt /home/iftakhar/ifty/vecmap_new_data/vecmap_output/SRC_x86_MAPPED.EMB /home/iftakhar/ifty/vecmap_new_data/vecmap_output/TRG_ARM_MAPPED.EMB --cuda
+//Worked with lab server
+//Now download files/generated embeddings from server:
+scp iftakhar@129.252.131.33:/home/iftakhar/ifty/vecmap_new_data/vecmap_output/TRG_ARM_MAPPED.EMB /home/iftakhar/Final_data_for_EK_and_Undreamt/vecmap_mapped_data/
+
+//Eklavya Testing few pkls
+conda activate rapids-0.16
+
+//chk if o/p folder empty
+
+python train.py -d /home/iftakhar/Final_data_for_EK_and_Undreamt/For_Eklavya/x86_few_test_pkl_files -o /home/iftakhar/EKLAVYA/code/RNN_v4/RNN_TRAIN_OUTPT_DIR_fewpkltest_jan13 -f /home/iftakhar/EKLAVYA/code/RNN_v4/split_func_paths/split_func_path_fewpkltest.pkl -e /home/iftakhar/Final_data_for_EK_and_Undreamt/x86_w2v_output.txt -ed 200 -pn 10 > train_few_pkls_jan13_logs.txt
+// some issues
+
+
+//For undreamt
+// copy below in required .sh file and run that
+python3 train.py --src /home/iftakhar/Final_data_for_EK_and_Undreamt/random_walk_code_sequences_x86_full.txt --trg /home/iftakhar/Final_data_for_EK_and_Undreamt/random_walk_code_sequences_ARM.txt --src_embeddings /home/iftakhar/Final_data_for_EK_and_Undreamt/vecmap_mapped_data/SRC_x86_MAPPED.EMB --trg_embeddings /home/iftakhar/Final_data_for_EK_and_Undreamt/vecmap_mapped_data/TRG_ARM_MAPPED.EMB --save undreamt_saved_model_Jan13_22_v1 --cuda > undreamt_jan13_22_v1.txt
+
+//GPU
+Traceback (most recent call last):
+  File "train.py", line 20, in <module>
+    undreamt.train.main_train()
+  File "/home/iftakhar/undreamt/undreamt/train.py", line 298, in main_train
+    trainer.step()
+  File "/home/iftakhar/undreamt/undreamt/train.py", line 342, in step
+    loss.div(self.batch_size).backward()
+  File "/home/iftakhar/miniconda3/envs/rapids-0.16/lib/python3.8/site-packages/torch/tensor.py", line 245, in backward
+    torch.autograd.backward(self, gradient, retain_graph, create_graph, inputs=inputs)
+  File "/home/iftakhar/miniconda3/envs/rapids-0.16/lib/python3.8/site-packages/torch/autograd/__init__.py", line 145, in backward
+    Variable._execution_engine.run_backward(
+RuntimeError: CUDA out of memory. Tried to allocate 924.00 MiB (GPU 0; 7.92 GiB total capacity; 6.18 GiB already allocated; 557.25 MiB free; 6.26 GiB reserved in total by PyTorch)
+end time and date : 01/13/22 18:46:16
+
+with batch 20
+RuntimeError: CUDA out of memory. Tried to allocate 66.00 MiB (GPU 0; 7.92 GiB total capacity; 6.72 GiB already allocated; 66.06 MiB free; 6.74 GiB reserved in total by PyTorch)
+
+with batch 10
+RuntimeError: CUDA out of memory. Tried to allocate 924.00 MiB (GPU 0; 7.92 GiB total capacity; 6.18 GiB already allocated; 557.25 MiB free; 6.26 GiB reserved in total by PyTorch)
+
+
+//For Eklavya
+Instructions for updating:
+Call initializer instance with the dtype argument instead of passing it to the constructor
+Traceback (most recent call last):
+  File "train.py", line 299, in <module>
+    main()
+  File "train.py", line 294, in main
+    training(config_info)
+  File "train.py", line 231, in training
+    model.train()
+  File "train.py", line 166, in train
+    cost, acc, summary, _ = self.session.run(
+  File "/home/iftakhar/miniconda3/envs/rapids-0.16/lib/python3.8/site-packages/tensorflow/python/client/session.py", line 967, in run
+    result = self._run(None, fetches, feed_dict, options_ptr,
+  File "/home/iftakhar/miniconda3/envs/rapids-0.16/lib/python3.8/site-packages/tensorflow/python/client/session.py", line 1164, in _run
+    raise ValueError(
+ValueError: Cannot feed value of shape (0,) for Tensor 'Placeholder:0', which has shape '(None, 500, 200)'
+
+
+
+
+sudo apt-get install foremost
+sudo foremost -i /dev/sda -o /home/iftakhar/all_commands/qrmu
+
+I am not sure if the training terminated unexpectedly. There can be few other issues. The desktop I am using might have ran out of memory. As I already mentioned earlier, the CPU was not responding to monitor after reconnecting the monitor.
+Also the desktop was automatically restarted (as I noticed this morning) and then monitor is working now. Therefore, training might have stopped for an unexpected restart of the desktop.
+
+I will update parameters to save intermediate models. Earlier it was only saving the final model at was the default configuration.
+
+Another thing I would like to get your suggestion about. The desktop I was using for Undreamt has 16GB RAM and only around 100GB disk space available. However, the desktop I am currenlty using for Eklavya has 32GB RAM and around 300GB disk space available.
+probable options:
+1. Should I use desktop with 32GB RAM to train Undreamt, in that case I can stop Eklavya in that and run Eklavya in desktop with 16GB RAM keep both desktop at lab.
+2. Or should I start training Undreamt and Eklavya together in desktop with 32GB RAM, then total time of completion might be longer.
+3. Or should I just use the current desktop with 16GB RAM for Undreamt and take it home so that I can monitor it more regularly.
+4. Also I can take desktop with 32GB RAM to home for working with Undreamt and use old desktop for Eklavya at lab. 
+5. Also I can retry with this desktop for Undreamt keeping it in lab and by freeing up more disk space.
+
+Please kindly share yoyr feedback.
+
+
+tail -n 100 origina_random_walk_code_sequences_ARM.txt >> LastNLines_origina_random_walk_code_sequences_ARM.txt
+
+
+Eklavya March 14 2022 PC3
+
+//Doing for O0
+//MUST save and delete O/p folder
+	done
+//MUST UPDATE/CHK DICT FILE PATH
+	done
+//MUST UPDATE DATASET
+	done
+	
+// if still issue 
+ValueError: Cannot feed value of shape (0,) for Tensor Placeholder:0, which has shape (None, 500, 200)
+Solution
+==> keep the modified_dict....txt file in the workspace folder directly and modify path of this file in dataset.py and keep it as only file name
+
+./run_Eklavya_pc3_march14.sh
+
+head -n 100000 Ek_train_x86_O0_March14_logs_PC3.txt > FirstNLines_Ek_train_x86_O0_March14_logs_PC3.txt
+
+./run_Eklavya_pc3_march15_for_test_x86.sh
+
+//issue
+2. RuntimeError: CUDA error: no kernel image is available for execution on the device
+CUDA kernel errors might be asynchronously reported at some other API call,so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1.
+
+ionrun
+    return tf_session.TF_SessionRun_wrapper(self._session, options, feed_dict,
+tensorflow.python.framework.errors_impl.InvalidArgumentError: logits and labels must be broadcastable: logits_size=[20,16] labels_size=[20,20]
+	 [[{{node softmax_cross_entropy_with_logits}}]]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "eval.py", line 292, in <module>
+    main()
+
+
+
+
+./translate_undreamt_desktop.sh
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,130 @@
+bash Miniconda3-py38_4.11.0-Linux-x86_64.sh
+
+export PATH="/home/username/miniconda/bin:$PATH"
+
+sudo apt update
+sudo apt install python3-pip
+
+sudo apt install python3.8-venv
+
+************
+python3 -m venv main_venv
+. main_venv/bin/activate
+cd /home/iftakhar/Ifty_All/vecmap
+
+
+/home/iftakhar/Ifty_All/Eklavya/test_march_14
+
+
+
+nvidia-smi
+GPU mem 10009MiB
+
+inside venv.....
+Starting from vecmap:
+
+numpy
+//error
+pip3 install cupy-cuda114
+
+cupy-10.1.0 
+
+conda install -c conda-forge cupy=11.4.0
+conda install -c conda-forge cupy cudatoolkit=11.4
+
+pip install cupy
+
+
+apt-get install g++
+
+try install cuDNN
+tar -xvf cudnn-11.4-linux-x64-v8.2.4.15.tgz
+
+// cuda path = /home/iftakhar/Ifty_All/cuda
+sudo cp cudnn-*-archive/include/cudnn*.h /home/iftakhar/Ifty_All/cuda/include
+sudo cp -P cudnn-*-archive/lib/libcudnn* /home/iftakhar/Ifty_All/cuda/lib64 
+sudo chmod a+r /usr/local/cuda/include/cudnn*.h /home/iftakhar/Ifty_All/cuda/lib64/libcudnn*
+
+
+
+bash Miniconda3-py38_4.11.0-Linux-x86_64.sh
+
+
+export CUDA_HOME=/usr/local/cuda
+export PATH=${CUDA_HOME}/bin:${PATH}
+export LD_LIBRARY_PATH=${CUDA_HOME}/lib64:$LD_LIBRARY_PATH
+
+
+
+MUST USE DOCKER for Vecmap,.... FOR CUPY, GPU, CUDA ************************************************** VECMAP WORED WITH DOCKER
+for docker
+sudo apt install containerd
+sudo apt install docker.io
+sudo systemctl start docker
+distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
+curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add -
+curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
+sudo apt-get update && sudo apt-get install -y nvidia-container-toolkit
+sudo systemctl restart docker
+sudo chmod 666 /var/run/docker.sock
+docker pull qts8n/cuda-python:devel
+docker run -it --rm --gpus all -v $(pwd):/workspace/ qts8n/cuda-python:devel bash
+			No WORK docker run --gpus all -it --rm nvcr.io/nvidia/pytorch:xx.xx-py3
+			
+docker pull nvcr.io/nvidia/pytorch:22.02-py3
+docker run -it --rm --gpus all -v $(pwd):/workspace/ nvcr.io/nvidia/pytorch:22.02-py3 bash
+
+
+
+//to load saved docker
+docker run -it --rm --gpus all -v $(pwd):/workspace/ docker_ifty_img1_gpu_cuda_cupy:version1 bash
+docker run -it --rm --gpus all -v $(pwd):/workspace/ docker_ifty_img1_gpu_pytorch_cuda_cupy:version2 bash
+sudo docker run -it --rm --gpus all -v $(pwd):/workspace/ docker_ifty_img1_gpu_pytorch_cuda_cupy_tensorflow:version3
+
+cd workspace
+
+
+docker ps
+to save
+docker commit 994fa846d738  docker_ifty_img1_gpu_cuda_cupy:version1
+docker commit 2837c70d7343  docker_ifty_img1_gpu_pytorch_cuda_cupy:version2
+sudo docker commit 0a18b6435a54  docker_ifty_img1_gpu_pytorch_cuda_cupy_tensorflow:version3
+
+
+For UNDREAMT///////////
+Errors:
+/usr/local/lib/python3.7/site-packages/torch/cuda/__init__.py:143: UserWarning: 
+1. NVIDIA GeForce RTX 3080 with CUDA capability sm_86 is not compatible with the current PyTorch installation.
+The current PyTorch install supports CUDA capabilities sm_37 sm_50 sm_60 sm_70.
+If you want to use the NVIDIA GeForce RTX 3080 GPU with PyTorch, please check the instructions at https://pytorch.org/get-started/locally/
+
+sudo apt-get install at
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
